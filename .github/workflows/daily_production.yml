@@ -1,0 +1,73 @@
+name: Daily Production
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # 10 AM UTC daily
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  daily_production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Cache embeddings model
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/torch/sentence_transformers
+          key: embeddings-model-v1
+          restore-keys: |
+            embeddings-model-
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg imagemagick
+      
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run daily production
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          LOG_LEVEL: INFO
+        run: |
+          cd src
+          python main.py daily
+      
+      - name: Upload metrics
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: daily-metrics
+          path: data/metrics/
+          retention-days: 7
+      
+      - name: Upload logs
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: daily-logs
+          path: data/logs/
+          retention-days: 7

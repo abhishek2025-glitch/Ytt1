@@ -1,0 +1,156 @@
+{
+  "trend_record": {
+    "type": "object",
+    "required": ["id", "title", "source", "timestamp", "origin_count"],
+    "properties": {
+      "id": {"type": "string"},
+      "title": {"type": "string"},
+      "description": {"type": "string"},
+      "source": {"type": "string", "enum": ["google_trends", "youtube", "reddit", "news_rss", "hackernews", "producthunt"]},
+      "source_url": {"type": "string"},
+      "timestamp": {"type": "string", "format": "date-time"},
+      "origin_count": {"type": "integer", "minimum": 1},
+      "embedding": {"type": "array", "items": {"type": "number"}},
+      "raw_metadata": {"type": "object"}
+    }
+  },
+  "validated_candidate": {
+    "type": "object",
+    "required": ["id", "trend_id", "explainability_seconds", "emotional_vector", "relevance", "passed"],
+    "properties": {
+      "id": {"type": "string"},
+      "trend_id": {"type": "string"},
+      "title": {"type": "string"},
+      "description": {"type": "string"},
+      "source_count": {"type": "integer"},
+      "explainability_seconds": {"type": "integer", "minimum": 0, "maximum": 120},
+      "emotional_vector": {"type": "string", "enum": ["surprise", "concern", "curiosity", "awe", "neutral"]},
+      "relevance": {"type": "number", "minimum": 0, "maximum": 1},
+      "passed": {"type": "boolean"},
+      "validation_notes": {"type": "string"}
+    }
+  },
+  "vps_record": {
+    "type": "object",
+    "required": ["candidate_id", "base_vps", "niche", "niche_multiplier", "final_score"],
+    "properties": {
+      "candidate_id": {"type": "string"},
+      "base_vps": {"type": "number", "minimum": 0, "maximum": 100},
+      "components": {
+        "type": "object",
+        "properties": {
+          "emotional_charge": {"type": "number"},
+          "curiosity_gap": {"type": "number"},
+          "timeliness": {"type": "number"},
+          "shareability": {"type": "number"},
+          "simplicity": {"type": "number"},
+          "historical_pattern": {"type": "number"},
+          "narrative_continuity": {"type": "number"}
+        }
+      },
+      "niche": {"type": "string"},
+      "niche_multiplier": {"type": "number"},
+      "saturation_factor": {"type": "number"},
+      "competitor_count": {"type": "integer"},
+      "final_score": {"type": "number"}
+    }
+  },
+  "edg": {
+    "type": "object",
+    "required": ["video_id", "format", "duration_seconds", "scenes"],
+    "properties": {
+      "video_id": {"type": "string"},
+      "format": {"type": "string", "enum": ["short", "long"]},
+      "duration_seconds": {"type": "integer"},
+      "aspect_ratio": {"type": "string", "enum": ["9:16", "16:9"]},
+      "scenes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "type", "start", "end"],
+          "properties": {
+            "id": {"type": "string"},
+            "type": {"type": "string", "enum": ["intro", "main", "data", "transition", "conclusion"]},
+            "visual": {"type": "string"},
+            "source_hint": {"type": "string"},
+            "start": {"type": "number"},
+            "end": {"type": "number"},
+            "text_overlay": {"type": "string"},
+            "tts_text": {"type": "string"},
+            "cut_type": {"type": "string"},
+            "transitions": {"type": "array"}
+          }
+        }
+      },
+      "thumbnail_frame_hint": {"type": "number"},
+      "metadata": {"type": "object"}
+    }
+  },
+  "rci_record": {
+    "type": "object",
+    "required": ["video_id", "hook", "title", "format", "posting_time", "niche", "narrative_lane"],
+    "properties": {
+      "video_id": {"type": "string"},
+      "hook": {"type": "string"},
+      "title": {"type": "string"},
+      "thumbnail_style": {"type": "string"},
+      "emotion": {"type": "string"},
+      "category": {"type": "string"},
+      "format": {"type": "string", "enum": ["short", "long"]},
+      "posting_time": {"type": "string", "format": "date-time"},
+      "publishing_hour": {"type": "integer", "minimum": 0, "maximum": 23},
+      "day_of_week": {"type": "string"},
+      "early_signals": {
+        "type": "object",
+        "properties": {
+          "views_2h": {"type": "integer"},
+          "views_24h": {"type": "integer"},
+          "view_velocity": {"type": "number"},
+          "like_ratio": {"type": "number"},
+          "comment_count": {"type": "integer"},
+          "retention_percentile": {"type": "number"}
+        }
+      },
+      "edg_hash": {"type": "string"},
+      "niche": {"type": "string"},
+      "narrative_lane": {"type": "string"},
+      "vps_score": {"type": "number"},
+      "final_earnings_score": {"type": "number"}
+    }
+  },
+  "learned_rule": {
+    "type": "object",
+    "required": ["rule_id", "rule_type", "condition", "effect_size", "confidence", "sample_size"],
+    "properties": {
+      "rule_id": {"type": "string"},
+      "rule_type": {"type": "string", "enum": ["thumbnail", "hook", "timing", "format", "niche", "narrative"]},
+      "condition": {"type": "string"},
+      "action": {"type": "string"},
+      "effect_size": {"type": "number"},
+      "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+      "p_value": {"type": "number"},
+      "sample_size": {"type": "integer"},
+      "created_week": {"type": "string"},
+      "last_validated": {"type": "string"},
+      "status": {"type": "string", "enum": ["active", "testing", "deprecated"]},
+      "provenance": {"type": "object"}
+    }
+  },
+  "publishing_record": {
+    "type": "object",
+    "required": ["video_id", "format", "scheduled_time", "status"],
+    "properties": {
+      "video_id": {"type": "string"},
+      "format": {"type": "string"},
+      "title": {"type": "string"},
+      "scheduled_time": {"type": "string", "format": "date-time"},
+      "actual_publish_time": {"type": "string", "format": "date-time"},
+      "status": {"type": "string", "enum": ["scheduled", "published", "failed", "quarantined"]},
+      "youtube_video_id": {"type": "string"},
+      "privacy_status": {"type": "string", "enum": ["public", "unlisted", "private"]},
+      "canary_status": {"type": "string"},
+      "attempts": {"type": "integer"},
+      "error_log": {"type": "array"}
+    }
+  }
+}

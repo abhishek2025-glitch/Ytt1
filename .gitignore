@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Data and cache directories
+data/cache/*
+data/assets/*
+data/queue/*
+data/metrics/*
+data/logs/*
+memory/rci_archive_*.json
+!data/cache/.gitkeep
+!data/assets/.gitkeep
+!data/queue/.gitkeep
+!data/metrics/.gitkeep
+!data/logs/.gitkeep
+
+# Output files
+*.mp4
+*.mp3
+*.wav
+*.png
+*.jpg
+*.jpeg
+output/
+tmp/
+temp/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Models and large files
+models/
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+
+# Secrets
+secrets.json
+credentials.json
+token.json
+client_secret*.json
+
+# GitHub Actions artifacts
+artifacts/
+
+# Temporary files
+Hello

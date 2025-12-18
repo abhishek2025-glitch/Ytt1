@@ -1,0 +1,39 @@
+name: Shorts Publisher
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # 1 PM UTC
+    - cron: '0 15 * * *'  # 3 PM UTC
+    - cron: '0 17 * * *'  # 5 PM UTC
+    - cron: '0 21 * * *'  # 9 PM UTC
+    - cron: '0 23 * * *'  # 11 PM UTC
+    - cron: '0 2 * * *'   # 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  publish_shorts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests python-dotenv google-api-python-client google-auth-oauthlib
+      
+      - name: Publish scheduled shorts
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          cd src
+          python main.py recovery

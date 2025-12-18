@@ -1,0 +1,79 @@
+{
+  "job_limits": {
+    "max_job_duration_minutes": 360,
+    "target_daily_production_minutes": 105,
+    "max_concurrent_jobs": 20,
+    "max_queue_length": 100
+  },
+  "cost_targets": {
+    "max_monthly_usd": 50.0,
+    "max_daily_usd": 2.0,
+    "alert_threshold_usd": 40.0
+  },
+  "storage_limits": {
+    "cache_max_gb": 2.0,
+    "artifacts_max_gb": 1.0,
+    "artifacts_retention_days": 7,
+    "cache_retention_days": 7
+  },
+  "parallelism": {
+    "shorts_parallel": 6,
+    "sense_sources_parallel": 8,
+    "asset_downloads_parallel": 3,
+    "enabled": true
+  },
+  "caching_strategy": {
+    "ffmpeg_cache": {
+      "enabled": true,
+      "size_mb": 100,
+      "key": "ffmpeg-${{ runner.os }}"
+    },
+    "embeddings_cache": {
+      "enabled": true,
+      "size_mb": 300,
+      "key": "embeddings-${{ hashFiles('requirements.txt') }}"
+    },
+    "asset_metadata_cache": {
+      "enabled": true,
+      "size_mb": 50,
+      "key": "assets-metadata-${{ github.run_id }}"
+    },
+    "rci_index_cache": {
+      "enabled": true,
+      "size_mb": 500,
+      "key": "rci-index-${{ github.sha }}"
+    }
+  },
+  "resource_allocation": {
+    "sense_layer": {
+      "timeout_minutes": 15,
+      "max_memory_gb": 1.0
+    },
+    "validation_layer": {
+      "timeout_minutes": 10,
+      "max_memory_gb": 0.5
+    },
+    "scoring_layer": {
+      "timeout_minutes": 10,
+      "max_memory_gb": 1.0
+    },
+    "generation_layer": {
+      "timeout_minutes": 20,
+      "max_memory_gb": 1.5
+    },
+    "production_layer": {
+      "timeout_minutes": 40,
+      "max_memory_gb": 2.0,
+      "per_video_minutes": 6
+    },
+    "publishing_layer": {
+      "timeout_minutes": 20,
+      "max_memory_gb": 0.5
+    }
+  },
+  "retry_strategy": {
+    "max_attempts": 3,
+    "backoff_multiplier": 2,
+    "initial_delay_seconds": 60
+  }
+}
