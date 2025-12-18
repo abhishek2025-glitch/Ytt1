@@ -1,0 +1,45 @@
+{
+  "niches": {
+    "finance": {
+      "multiplier": 1.8,
+      "keywords": ["finance", "money", "investment", "stocks", "trading", "wealth", "portfolio", "retirement", "savings", "debt"],
+      "description": "Personal finance, investing, trading, wealth building"
+    },
+    "ai_tech": {
+      "multiplier": 1.6,
+      "keywords": ["ai", "artificial intelligence", "machine learning", "technology", "software", "automation", "robotics", "neural", "algorithm", "chatgpt", "openai"],
+      "description": "AI, ML, emerging tech, automation"
+    },
+    "business": {
+      "multiplier": 1.4,
+      "keywords": ["business", "entrepreneur", "startup", "company", "corporate", "management", "strategy", "leadership", "productivity", "growth"],
+      "description": "Business strategy, entrepreneurship, startups"
+    },
+    "self_improvement": {
+      "multiplier": 1.2,
+      "keywords": ["self improvement", "productivity", "habits", "motivation", "mindset", "success", "personal development", "psychology", "learning", "skills"],
+      "description": "Self-improvement, productivity, personal development"
+    },
+    "crypto": {
+      "multiplier": 1.3,
+      "keywords": ["crypto", "cryptocurrency", "bitcoin", "ethereum", "blockchain", "defi", "nft", "web3", "mining", "token"],
+      "description": "Cryptocurrency, blockchain, Web3"
+    },
+    "geopolitics": {
+      "multiplier": 1.1,
+      "keywords": ["geopolitics", "international", "global", "trade", "diplomacy", "conflict", "alliance", "sanctions", "war", "peace"],
+      "description": "International relations, global affairs"
+    },
+    "news": {
+      "multiplier": 0.4,
+      "keywords": ["breaking news", "latest", "update", "report", "announcement", "statement"],
+      "description": "General news and updates"
+    },
+    "entertainment": {
+      "multiplier": 0.2,
+      "keywords": ["celebrity", "entertainment", "movie", "music", "tv show", "actor", "singer", "awards", "gossip", "drama"],
+      "description": "Entertainment, celebrity news"
+    }
+  },
+  "default_multiplier": 1.0
+}

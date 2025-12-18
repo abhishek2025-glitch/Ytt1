@@ -1,0 +1,81 @@
+{
+  "lanes": {
+    "ai_power": {
+      "name": "AI & Power",
+      "percentage_min": 30,
+      "percentage_max": 35,
+      "description": "AI systems, automation impact, tech power dynamics",
+      "keywords": ["ai", "automation", "machine learning", "algorithm", "tech giants", "data", "surveillance"],
+      "tone": "analytical, cold, skeptical of hype",
+      "examples": [
+        "How AI systems are reshaping labor markets",
+        "The hidden economics of large language models",
+        "Why AI regulation is already behind"
+      ]
+    },
+    "market_inflection": {
+      "name": "Market Inflection",
+      "percentage_min": 25,
+      "percentage_max": 30,
+      "description": "Financial markets, economic shifts, investment implications",
+      "keywords": ["market", "economy", "investment", "stocks", "crypto", "inflation", "interest rates", "recession"],
+      "tone": "data-driven, contrarian when justified",
+      "examples": [
+        "Three signals that predicted the last market crash",
+        "Why traditional diversification is breaking down",
+        "The unnoticed shift in global capital flows"
+      ]
+    },
+    "hidden_data": {
+      "name": "Hidden Data",
+      "percentage_min": 20,
+      "percentage_max": 25,
+      "description": "Overlooked statistics, data patterns, counterintuitive findings",
+      "keywords": ["data", "study", "research", "statistics", "survey", "analysis", "pattern", "trend"],
+      "tone": "curious, source-focused, evidence-based",
+      "examples": [
+        "The productivity metric that predicts company failure",
+        "What 10,000 job applications revealed about hiring",
+        "The correlation no one talks about"
+      ]
+    },
+    "competitive": {
+      "name": "Competitive Edge",
+      "percentage_min": 15,
+      "percentage_max": 20,
+      "description": "Skills, strategies, asymmetric advantages",
+      "keywords": ["skill", "strategy", "advantage", "competition", "leverage", "efficiency", "optimization", "growth"],
+      "tone": "tactical, practical, no fluff",
+      "examples": [
+        "The negotiation tactic most people miss",
+        "How top performers think about risk",
+        "Three skills that compound over time"
+      ]
+    },
+    "contrarian": {
+      "name": "Contrarian Take",
+      "percentage_min": 10,
+      "percentage_max": 15,
+      "description": "Challenge conventional wisdom with evidence",
+      "keywords": ["wrong", "myth", "misconception", "actually", "reality", "truth", "contrary"],
+      "tone": "provocative but sourced, evidence-backed",
+      "examples": [
+        "Why the 10,000 hour rule is misleading",
+        "The productivity advice that backfires",
+        "What successful people won't tell you"
+      ]
+    }
+  },
+  "allocation_rules": {
+    "enforce_quotas": true,
+    "allow_flexibility": 0.05,
+    "rebalance_weekly": true,
+    "minimum_exploratory_percentage": 20,
+    "max_same_lane_consecutive": 2
+  },
+  "fatigue_control": {
+    "rolling_window_days": 14,
+    "max_lane_percentage_14d": 40,
+    "alert_if_imbalance": true
+  }
+}

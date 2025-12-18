@@ -1,0 +1,73 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests psutil
+      
+      - name: Check system health
+        run: |
+          python3 << 'EOF'
+          import json
+          import os
+          from pathlib import Path
+          from datetime import datetime, timedelta
+          
+          health = {
+              "timestamp": datetime.utcnow().isoformat(),
+              "status": "healthy",
+              "issues": []
+          }
+          
+          # Check queue size
+          queue_dir = Path("data/queue")
+          if queue_dir.exists():
+              queue_size = len(list(queue_dir.glob("queue_*.json")))
+              if queue_size > 100:
+                  health["status"] = "warning"
+                  health["issues"].append(f"Queue size high: {queue_size}")
+          
+          # Check recent production
+          metrics_dir = Path("data/metrics")
+          if metrics_dir.exists():
+              summary_files = list(metrics_dir.glob("daily_summary.json"))
+              if not summary_files:
+                  health["status"] = "warning"
+                  health["issues"].append("No recent production runs found")
+          
+          # Check disk space
+          import shutil
+          disk = shutil.disk_usage(".")
+          disk_pct = (disk.used / disk.total) * 100
+          if disk_pct > 90:
+              health["status"] = "critical"
+              health["issues"].append(f"Disk usage high: {disk_pct:.1f}%")
+          
+          print(json.dumps(health, indent=2))
+          
+          if health["status"] == "critical":
+              exit(1)
+          EOF
+      
+      - name: Report status
+        if: failure()
+        run: |
+          echo "Health check failed! Manual intervention required."

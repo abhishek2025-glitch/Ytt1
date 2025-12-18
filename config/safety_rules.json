@@ -1,0 +1,85 @@
+{
+  "hard_blocklist": {
+    "description": "Immediate rejection, no exceptions",
+    "categories": [
+      {
+        "name": "political_endorsements",
+        "keywords": ["vote for", "support candidate", "elect", "vote against"],
+        "patterns": ["explicitly endorsing political candidates or parties"]
+      },
+      {
+        "name": "unverified_accusations",
+        "keywords": ["is guilty of", "committed fraud", "is a scam", "is lying"],
+        "patterns": ["direct accusations without attribution"]
+      },
+      {
+        "name": "medical_advice",
+        "keywords": ["cure for", "treat your", "instead of medication", "doctor is wrong"],
+        "patterns": ["specific medical advice, diagnoses, or treatment recommendations"]
+      },
+      {
+        "name": "financial_advice",
+        "keywords": ["guaranteed returns", "can't lose", "buy this stock", "sell everything"],
+        "patterns": ["specific investment recommendations without disclaimers"]
+      },
+      {
+        "name": "conspiracy_theories",
+        "keywords": ["secret cabal", "they don't want you to know", "hidden agenda", "wake up sheeple"],
+        "patterns": ["unfounded conspiracy theories"]
+      }
+    ]
+  },
+  "soft_blacklist": {
+    "description": "Requires attribution and sourcing",
+    "categories": [
+      {
+        "name": "controversial_claims",
+        "keywords": ["studies show", "research proves", "data reveals", "experts say"],
+        "required_attribution": true,
+        "min_sources": 1
+      },
+      {
+        "name": "sensitive_topics",
+        "keywords": ["war", "conflict", "pandemic", "disaster", "tragedy", "death"],
+        "required_tone": "respectful",
+        "required_sourcing": true
+      },
+      {
+        "name": "financial_implications",
+        "keywords": ["investment opportunity", "market crash", "bull market", "bear market"],
+        "required_disclaimer": "Not financial advice"
+      }
+    ]
+  },
+  "persona_constraints": {
+    "required_tone": "cold, analytical, sourced skepticism",
+    "banned_phrases": [
+      "you won't believe",
+      "this will blow your mind",
+      "shocking truth",
+      "doctors hate this",
+      "one simple trick",
+      "clickbait intensifiers"
+    ],
+    "required_elements": [
+      "data or source attribution",
+      "neutral tone",
+      "no sensationalism without evidence"
+    ]
+  },
+  "quarantine_rules": {
+    "threshold_daily_violations": 3,
+    "threshold_percentage": 0.1,
+    "action": "alert and suspend generation",
+    "review_required": true
+  },
+  "moderation_settings": {
+    "pre_publish_scan": true,
+    "scan_targets": ["title", "description", "script", "captions"],
+    "violation_handling": {
+      "hard_violation": "suppress",
+      "soft_violation": "add_attribution",
+      "multiple_soft": "quarantine"
+    }
+  }
+}
