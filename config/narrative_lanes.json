@@ -1,68 +1,68 @@
 {
   "lanes": {
-    "ai_power": {
-      "name": "AI & Power",
-      "percentage_min": 30,
-      "percentage_max": 35,
-      "description": "AI systems, automation impact, tech power dynamics",
-      "keywords": ["ai", "automation", "machine learning", "algorithm", "tech giants", "data", "surveillance"],
-      "tone": "analytical, cold, skeptical of hype",
+    "stock_market": {
+      "name": "Stock Market & Stocks",
+      "percentage_min": 35,
+      "percentage_max": 40,
+      "description": "Stock market analysis, individual stock picks, earnings reports",
+      "keywords": ["stocks", "market", "SP500", "earnings", "dividend", "portfolio", "buy", "sell"],
+      "tone": "analytical, confident, data-driven",
       "examples": [
-        "How AI systems are reshaping labor markets",
-        "The hidden economics of large language models",
-        "Why AI regulation is already behind"
+        "Why Tech Stocks Are Crashing",
+        "Top 3 Dividend Stocks for 2024",
+        "Tesla Earnings Analysis"
       ]
     },
-    "market_inflection": {
-      "name": "Market Inflection",
+    "crypto_blockchain": {
+      "name": "Crypto & Blockchain",
       "percentage_min": 25,
       "percentage_max": 30,
-      "description": "Financial markets, economic shifts, investment implications",
-      "keywords": ["market", "economy", "investment", "stocks", "crypto", "inflation", "interest rates", "recession"],
-      "tone": "data-driven, contrarian when justified",
+      "description": "Cryptocurrency news, blockchain technology, DeFi",
+      "keywords": ["crypto", "bitcoin", "ethereum", "blockchain", "altcoins", "web3", "wallet"],
+      "tone": "excited, futuristic, urgent",
       "examples": [
-        "Three signals that predicted the last market crash",
-        "Why traditional diversification is breaking down",
-        "The unnoticed shift in global capital flows"
+        "Bitcoin Halving Explained",
+        "Next 100x Altcoin",
+        "Crypto Regulation Update"
       ]
     },
-    "hidden_data": {
-      "name": "Hidden Data",
+    "macro_economics": {
+      "name": "Macro Economics & Fed",
       "percentage_min": 20,
       "percentage_max": 25,
-      "description": "Overlooked statistics, data patterns, counterintuitive findings",
-      "keywords": ["data", "study", "research", "statistics", "survey", "analysis", "pattern", "trend"],
-      "tone": "curious, source-focused, evidence-based",
+      "description": "Federal Reserve policy, inflation, interest rates, recession",
+      "keywords": ["fed", "inflation", "rates", "recession", "economy", "dollar", "crisis"],
+      "tone": "serious, warning, educational",
       "examples": [
-        "The productivity metric that predicts company failure",
-        "What 10,000 job applications revealed about hiring",
-        "The correlation no one talks about"
+        "Fed Raises Rates Again",
+        "Inflation Data Shock",
+        "Recession Signals Flashing"
       ]
     },
-    "competitive": {
-      "name": "Competitive Edge",
+    "investing_psychology": {
+      "name": "Investing Psychology",
       "percentage_min": 15,
       "percentage_max": 20,
-      "description": "Skills, strategies, asymmetric advantages",
-      "keywords": ["skill", "strategy", "advantage", "competition", "leverage", "efficiency", "optimization", "growth"],
-      "tone": "tactical, practical, no fluff",
+      "description": "Behavioral finance, mindset, emotional control",
+      "keywords": ["psychology", "mindset", "fear", "greed", "discipline", "mistakes", "habits"],
+      "tone": "calm, reflective, mentorship",
       "examples": [
-        "The negotiation tactic most people miss",
-        "How top performers think about risk",
-        "Three skills that compound over time"
+        "Why You Panic Sell",
+        "Master Your Money Mindset",
+        "Psychology of a Bear Market"
       ]
     },
     "contrarian": {
-      "name": "Contrarian Take",
-      "percentage_min": 10,
-      "percentage_max": 15,
-      "description": "Challenge conventional wisdom with evidence",
-      "keywords": ["wrong", "myth", "misconception", "actually", "reality", "truth", "contrary"],
-      "tone": "provocative but sourced, evidence-backed",
+      "name": "Contrarian/Exploration",
+      "percentage_min": 5,
+      "percentage_max": 10,
+      "description": "Challenging consensus, exploring new ideas",
+      "keywords": ["wrong", "actually", "truth", "myth", "lie", "secret", "hidden"],
+      "tone": "provocative, inquisitive, surprising",
       "examples": [
-        "Why the 10,000 hour rule is misleading",
-        "The productivity advice that backfires",
-        "What successful people won't tell you"
+        "Why Everyone Is Wrong About Gold",
+        "The Debt Myth",
+        "Don't Buy A House"
       ]
     }
   },
@@ -70,8 +70,9 @@
     "enforce_quotas": true,
     "allow_flexibility": 0.05,
     "rebalance_weekly": true,
-    "minimum_exploratory_percentage": 20,
-    "max_same_lane_consecutive": 2
+    "minimum_exploratory_percentage": 5,
+    "max_same_lane_consecutive": 1,
+    "soft_quota_override_vps": 85
   },
   "fatigue_control": {
     "rolling_window_days": 14,

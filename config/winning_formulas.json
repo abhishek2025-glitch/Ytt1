@@ -1,0 +1,71 @@
+{
+  "titles": {
+    "patterns": [
+      {
+        "name": "curiosity_benefit",
+        "pattern": "[Curiosity] + [Benefit]",
+        "example": "Why the Fed's Decision Changes Your 401k",
+        "weight": 0.4
+      },
+      {
+        "name": "question_stakes",
+        "pattern": "[Question] + [Stakes]",
+        "example": "Is Your Dividend Strategy Broken?",
+        "weight": 0.3
+      },
+      {
+        "name": "data_insight",
+        "pattern": "[Data] + [Insight]",
+        "example": "What This Chart Reveals About Inflation",
+        "weight": 0.3
+      }
+    ]
+  },
+  "thumbnails": {
+    "styles": [
+      {
+        "name": "variant_a",
+        "description": "Red accent, high contrast, curiosity hook (question mark)",
+        "weight": 0.33
+      },
+      {
+        "name": "variant_b",
+        "description": "Green accent (opportunity), growth arrow",
+        "weight": 0.33
+      },
+      {
+        "name": "variant_c",
+        "description": "Neutral background, bold numbers/data",
+        "weight": 0.34
+      }
+    ]
+  },
+  "tones": {
+    "options": [
+      {
+        "name": "serious_analyst",
+        "description": "Authoritative, slow, serious",
+        "best_for": ["macro_economics", "stock_market"]
+      },
+      {
+        "name": "casual_educator",
+        "description": "Conversational, friendly, fast",
+        "best_for": ["investing_psychology", "crypto_blockchain"]
+      },
+      {
+        "name": "data_nerd",
+        "description": "Numbers, charts, logical, objective",
+        "best_for": ["hidden_data", "contrarian"]
+      }
+    ]
+  },
+  "hooks": {
+    "templates": [
+      "You probably don't know...",
+      "This is counterintuitive...",
+      "The data shows something unexpected...",
+      "Everyone is looking at X, but Y is the real story...",
+      "Stop doing X if you want Y..."
+    ]
+  }
+}

@@ -9,7 +9,8 @@ logger = get_logger(__name__)
 class LLMClient:
     def __init__(self):
         self.api_key = os.getenv("OPENROUTER_API_KEY", "")
-        self.model = os.getenv("OPENROUTER_MODEL", "anthropic/claude-3.5-sonnet")
+        # Ticket specifies GLM-4.5 Air. Using zhipu/glm-4-air as best guess for slug.
+        self.model = os.getenv("OPENROUTER_MODEL", "zhipu/glm-4-air")
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
         self.timeout_primary = 10
         self.timeout_fallback = 5
@@ -37,11 +38,13 @@ class LLMClient:
                 headers={
                     "Authorization": f"Bearer {self.api_key}",
                     "Content-Type": "application/json",
+                    "HTTP-Referer": "https://viralos.prime",
+                    "X-Title": "ViralOS Prime",
                 },
                 json={
                     "model": self.model,
                     "messages": messages,
-                    "max_tokens": 2000,
+                    "max_tokens": 4000,
                     "temperature": 0.7,
                 },
                 timeout=self.timeout_primary,

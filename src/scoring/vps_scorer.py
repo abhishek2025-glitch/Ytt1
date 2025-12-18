@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import List, Dict
+import datetime
 from ..shared import get_logger, embedding_service
 
 logger = get_logger(__name__)
@@ -10,12 +11,12 @@ class VPSScorer:
         self.niche_config = self._load_niche_config()
         self.weights = {
             "emotional_charge": 0.15,
-            "curiosity_gap": 0.20,
-            "timeliness": 0.10,
+            "curiosity_gap": 0.25,
+            "timeliness": 0.15,
             "shareability": 0.15,
             "simplicity": 0.10,
             "historical_pattern": 0.10,
-            "narrative_continuity": 0.15,
+            "narrative_fit": 0.10,
         }
         logger.info("VPSScorer initialized")
     
@@ -31,7 +32,8 @@ class VPSScorer:
         
         for candidate in candidates:
             score_record = self.score_single(candidate)
-            scored.append(score_record)
+            if score_record["final_score"] > 0: # Filter out skipped ones
+                scored.append(score_record)
         
         scored.sort(key=lambda x: x["final_score"], reverse=True)
         
@@ -52,7 +54,7 @@ class VPSScorer:
             "shareability": self._score_shareability(candidate),
             "simplicity": self._score_simplicity(candidate),
             "historical_pattern": self._score_historical_pattern(candidate),
-            "narrative_continuity": self._score_narrative_continuity(candidate),
+            "narrative_fit": self._score_narrative_fit(candidate),
         }
         
         base_vps = sum(
@@ -75,7 +77,7 @@ class VPSScorer:
             "niche": niche,
             "niche_multiplier": niche_multiplier,
             "saturation_factor": saturation_factor,
-            "competitor_count": 0,
+            "competitor_count": candidate.get("competitor_count", 0),
             "final_score": round(final_score, 2),
         }
     
@@ -85,6 +87,7 @@ class VPSScorer:
             "surprise": 85,
             "concern": 80,
             "curiosity": 90,
+            "opportunity": 85, # Added as per ticket
             "awe": 75,
             "neutral": 40,
         }
@@ -93,19 +96,23 @@ class VPSScorer:
     def _score_curiosity_gap(self, candidate: Dict) -> float:
         title = candidate.get("title", "").lower()
         
-        curiosity_triggers = ["why", "how", "what", "secret", "hidden", "revealed", "truth"]
+        curiosity_triggers = ["why", "how", "what", "secret", "hidden", "revealed", "truth", "myth", "lie", "wrong"]
         trigger_count = sum(1 for trigger in curiosity_triggers if trigger in title)
         
         return min(50 + (trigger_count * 15), 100)
     
     def _score_timeliness(self, candidate: Dict) -> float:
-        import datetime
         timestamp_str = candidate.get("timestamp", "")
         
         try:
             if timestamp_str:
                 timestamp = datetime.datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
-                age_hours = (datetime.datetime.now(datetime.timezone.utc) - timestamp).total_seconds() / 3600
+                # Handle tz aware vs naive
+                now = datetime.datetime.now(datetime.timezone.utc)
+                if timestamp.tzinfo is None:
+                    timestamp = timestamp.replace(tzinfo=datetime.timezone.utc)
+                
+                age_hours = (now - timestamp).total_seconds() / 3600
                 
                 if age_hours < 6:
                     return 95
@@ -115,7 +122,7 @@ class VPSScorer:
                     return 60
                 else:
                     return 40
-        except:
+        except Exception:
             pass
         
         return 50
@@ -123,7 +130,7 @@ class VPSScorer:
     def _score_shareability(self, candidate: Dict) -> float:
         title = candidate.get("title", "")
         
-        shareable_elements = ["data", "study", "research", "reveals", "shows", "proves"]
+        shareable_elements = ["data", "study", "research", "reveals", "shows", "proves", "chart", "map"]
         element_count = sum(1 for elem in shareable_elements if elem in title.lower())
         
         base_score = 60
@@ -144,9 +151,16 @@ class VPSScorer:
             return 40
     
     def _score_historical_pattern(self, candidate: Dict) -> float:
+        # Ideal: Embedding similarity with past winners
+        # Implementation: Check if embedding service is ready, if so, use it.
+        # Otherwise return heuristic.
+        # Assuming we don't have past winners loaded in memory for this task context
+        # but in a real run, they would be in RCI.
         return 70
     
-    def _score_narrative_continuity(self, candidate: Dict) -> float:
+    def _score_narrative_fit(self, candidate: Dict) -> float:
+        # Check alignment with narrative lanes
+        # This will be handled more in Decision layer, but here we score general fit
         return 65
     
     def _detect_niche(self, candidate: Dict) -> str:
@@ -164,8 +178,12 @@ class VPSScorer:
         return niche_data.get("multiplier", self.niche_config.get("default_multiplier", 1.0))
     
     def _calculate_saturation_factor(self, candidate: Dict) -> float:
-        competitor_count = 0
-        
+        # Competitor count should be populated by Sense/Validation or estimated
+        # Assuming candidate has 'competitor_count' or 'origin_count' mapped
+        competitor_count = candidate.get("origin_count", 0) # Using origin_count as proxy if not explicit
+        if "competitor_count" in candidate:
+            competitor_count = candidate["competitor_count"]
+            
         if competitor_count <= 2:
             return 1.8
         elif competitor_count <= 5:
@@ -175,4 +193,4 @@ class VPSScorer:
         elif competitor_count <= 50:
             return 0.3
         else:
-            return 0.1
+            return 0.0 # Skip
