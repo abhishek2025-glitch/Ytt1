@@ -1,53 +1,37 @@
 {
   "shorts": {
-    "daily_count": 6,
+    "daily_count": 2,
     "publish_times_utc": [
-      {"hour": 13, "minute": 0, "reason": "Early afternoon ET peak"},
-      {"hour": 15, "minute": 0, "reason": "Mid-afternoon engagement"},
-      {"hour": 17, "minute": 0, "reason": "Evening commute start"},
-      {"hour": 21, "minute": 0, "reason": "Prime time evening"},
-      {"hour": 23, "minute": 0, "reason": "Late night browsing"},
-      {"hour": 2, "minute": 0, "reason": "Night owl + international"}
+      {"hour": 10, "minute": 0, "reason": "Market open optimal"},
+      {"hour": 10, "minute": 15, "reason": "Market open optimal + jitter"}
     ],
-    "minimum_spacing_hours": 2,
-    "max_per_day": 8
+    "minimum_spacing_hours": 0,
+    "max_per_day": 3,
+    "days_active": ["monday", "wednesday", "friday"]
   },
   "longform": {
     "daily_count": 1,
     "publish_times_utc": [
-      {"hour": 14, "minute": 0, "reason": "Peak afternoon ET"}
+      {"hour": 10, "minute": 5, "reason": "Market open optimal"}
     ],
-    "preferred_days": ["tuesday", "wednesday", "thursday"],
-    "avoid_days": ["friday", "saturday", "sunday"],
-    "max_per_day": 2
+    "days_active": ["monday", "wednesday", "friday"],
+    "max_per_day": 1
   },
   "niche_optimal_times": {
     "finance": [
-      {"hour": 13, "minute": 0, "timezone": "UTC", "reason": "8-10 AM ET market hours"},
-      {"hour": 14, "minute": 0, "timezone": "UTC"},
-      {"hour": 15, "minute": 0, "timezone": "UTC"}
-    ],
-    "ai_tech": [
-      {"hour": 12, "minute": 0, "timezone": "UTC"},
-      {"hour": 13, "minute": 0, "timezone": "UTC"},
-      {"hour": 14, "minute": 0, "timezone": "UTC"}
-    ],
-    "business": [
-      {"hour": 12, "minute": 0, "timezone": "UTC"},
-      {"hour": 13, "minute": 0, "timezone": "UTC"},
-      {"hour": 14, "minute": 0, "timezone": "UTC"}
-    ],
-    "self_improvement": [
-      {"hour": 14, "minute": 0, "timezone": "UTC"},
-      {"hour": 15, "minute": 0, "timezone": "UTC"},
-      {"hour": 16, "minute": 0, "timezone": "UTC"}
+      {"hour": 10, "minute": 0, "timezone": "UTC", "reason": "Market open optimal"}
     ]
   },
   "canary_settings": {
     "enabled": true,
-    "observation_hours": 2,
+    "observation_minutes": 30,
     "initial_privacy": "unlisted",
     "promotion_threshold_percentile": 80,
-    "suppression_threshold_percentile": 50
+    "suppression_threshold_percentile": 50,
+    "decision_tiers": [
+      {"percentile": 80, "action": "public_immediate"},
+      {"percentile": 50, "action": "public_delayed"},
+      {"percentile": 0, "action": "suppress"}
+    ]
   }
 }

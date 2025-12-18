@@ -18,9 +18,9 @@
         "patterns": ["specific medical advice, diagnoses, or treatment recommendations"]
       },
       {
-        "name": "financial_advice",
-        "keywords": ["guaranteed returns", "can't lose", "buy this stock", "sell everything"],
-        "patterns": ["specific investment recommendations without disclaimers"]
+        "name": "financial_advice_guarantees",
+        "keywords": ["guaranteed returns", "can't lose", "buy this stock now", "sell everything immediately"],
+        "patterns": ["specific investment recommendations with guaranteed outcomes", "pump and dump schemes"]
       },
       {
         "name": "conspiracy_theories",
@@ -46,25 +46,26 @@
       },
       {
         "name": "financial_implications",
-        "keywords": ["investment opportunity", "market crash", "bull market", "bear market"],
-        "required_disclaimer": "Not financial advice"
+        "keywords": ["investment opportunity", "market crash", "bull market", "bear market", "stock pick", "crypto gem"],
+        "required_disclaimer": "This is not financial advice. For entertainment purposes only. Do your own research."
       }
     ]
   },
   "persona_constraints": {
-    "required_tone": "cold, analytical, sourced skepticism",
+    "required_tone": "analytical, objective, sourced",
     "banned_phrases": [
       "you won't believe",
-      "this will blow your mind",
       "shocking truth",
       "doctors hate this",
       "one simple trick",
-      "clickbait intensifiers"
+      "guaranteed profit",
+      "to the moon (without context)"
     ],
     "required_elements": [
       "data or source attribution",
-      "neutral tone",
-      "no sensationalism without evidence"
+      "neutral tone for news",
+      "no sensationalism without evidence",
+      "financial disclaimer in description/video"
     ]
   },
   "quarantine_rules": {
@@ -78,7 +79,7 @@
     "scan_targets": ["title", "description", "script", "captions"],
     "violation_handling": {
       "hard_violation": "suppress",
-      "soft_violation": "add_attribution",
+      "soft_violation": "add_attribution_or_disclaimer",
       "multiple_soft": "quarantine"
     }
   }
